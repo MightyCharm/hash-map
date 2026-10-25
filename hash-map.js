@@ -70,7 +70,11 @@ const HashMap = () => {
     }
   };
 
-  return { set, printAllBuckets };
+  const length = () => {
+    return count;
+  };
+
+  return { set, length, printAllBuckets };
 };
 
 // 1. 2. 2. 3.
@@ -82,6 +86,7 @@ test.set("ab", "second");
 test.set("abb", "third");
 test.set("a", "new first");
 test.printAllBuckets();
+console.log(test.length());
 //====================
 //====================
 //====================
