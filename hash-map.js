@@ -48,7 +48,29 @@ const HashMap = () => {
     count++;
   };
 
-  return { set };
+  const printAllBuckets = () => {
+    for (let i = 0; i < capacity; i++) {
+      console.log(`Bucket ${i}:`);
+      if (buckets[i] === null) {
+        console.log(buckets[i]);
+        console.log();
+        continue;
+      }
+      let curr = buckets[i];
+      let output = "";
+      do {
+        output += `(${curr.key}: ${curr.value})`;
+        curr = curr.next;
+        if (curr !== null) {
+          output += " -> ";
+        }
+      } while (curr !== null);
+      console.log(output);
+      console.log();
+    }
+  };
+
+  return { set, printAllBuckets };
 };
 
 // 1. 2. 2. 3.
@@ -59,7 +81,7 @@ test.set("a", "first");
 test.set("ab", "second");
 test.set("abb", "third");
 test.set("a", "new first");
-
+test.printAllBuckets();
 //====================
 //====================
 //====================
