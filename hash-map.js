@@ -1,6 +1,6 @@
 const HashMap = () => {
   const LOAD_FACTOR = 0.75;
-  const buckets = new Array(16).fill(null);
+  let buckets = new Array(16).fill(null);
   let capacity = buckets.length; // length of the array
   let resizeAt = capacity * LOAD_FACTOR; // if entries surpass this number, resize
   let count = 0; // counts total number of stored keys
@@ -60,6 +60,17 @@ const HashMap = () => {
     return undefined;
   };
 
+  const length = () => {
+    return count;
+  };
+
+  const clear = () => {
+    buckets = new Array(16).fill(null);
+    capacity = buckets.length;
+    resizeAt = capacity * LOAD_FACTOR;
+    count = 0;
+  };
+
   const printAllBuckets = () => {
     for (let i = 0; i < capacity; i++) {
       console.log(`Bucket ${i}:`);
@@ -82,11 +93,7 @@ const HashMap = () => {
     }
   };
 
-  const length = () => {
-    return count;
-  };
-
-  return { set, length, get, printAllBuckets };
+  return { set, length, get, clear, printAllBuckets };
 };
 
 const test = HashMap();
@@ -102,7 +109,10 @@ test.set("ice cream", "white");
 test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
-
+test.printAllBuckets();
+test.clear();
+test.printAllBuckets();
+/*
 console.log(test.get("apple"));
 console.log(test.get("banana"));
 console.log(test.get("carrot"));
@@ -117,6 +127,6 @@ console.log(test.get("kite"));
 console.log(test.get("lion"));
 console.log(test.get("random"));
 console.log(test.get("testcase"));
-
+*/
 //test.printAllBuckets();
 //console.log(test.length());
