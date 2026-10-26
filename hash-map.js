@@ -60,6 +60,18 @@ const HashMap = () => {
     return undefined;
   };
 
+  const has = (key) => {
+    const hashKey = hash(key) % capacity;
+    let curr = buckets[hashKey];
+    while (curr !== null) {
+      if (curr.key === key) {
+        return true;
+      }
+      curr = curr.next;
+    }
+    return false;
+  };
+
   const length = () => {
     return count;
   };
@@ -93,7 +105,7 @@ const HashMap = () => {
     }
   };
 
-  return { set, length, get, clear, printAllBuckets };
+  return { set, get, has, length, clear, printAllBuckets };
 };
 
 const test = HashMap();
@@ -109,24 +121,21 @@ test.set("ice cream", "white");
 test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
-test.printAllBuckets();
-test.clear();
-test.printAllBuckets();
-/*
-console.log(test.get("apple"));
-console.log(test.get("banana"));
-console.log(test.get("carrot"));
-console.log(test.get("dog"));
-console.log(test.get("elephant"));
-console.log(test.get("frog"));
-console.log(test.get("grape"));
-console.log(test.get("hat"));
-console.log(test.get("ice cream"));
-console.log(test.get("jacket"));
-console.log(test.get("kite"));
-console.log(test.get("lion"));
-console.log(test.get("random"));
-console.log(test.get("testcase"));
-*/
-//test.printAllBuckets();
-//console.log(test.length());
+
+console.log(test.has("apple"));
+console.log(test.has("banana"));
+console.log(test.has("carrot"));
+console.log(test.has("dog"));
+console.log(test.has("elephant"));
+console.log(test.has("frog"));
+console.log(test.has("grape"));
+console.log(test.has("hat"));
+console.log(test.has("ice cream"));
+console.log(test.has("jacket"));
+console.log(test.has("kite"));
+console.log(test.has("lion"));
+
+console.log(test.has("banan"));
+console.log(test.has("grap"));
+console.log(test.has("ice"));
+console.log(test.has("lio"));
