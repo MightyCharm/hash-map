@@ -119,6 +119,7 @@ const HashMap = () => {
     count = 0;
   };
 
+  // print all buckets
   const printAllBuckets = () => {
     for (let i = 0; i < capacity; i++) {
       console.log(`Bucket ${i}:`);
@@ -141,6 +142,7 @@ const HashMap = () => {
     }
   };
 
+  // print one specific bucket
   const printBucket = (key) => {
     const hashKey = hash(key) % capacity;
     let curr = buckets[hashKey];
@@ -159,7 +161,36 @@ const HashMap = () => {
     console.log(output);
   };
 
-  return { set, get, has, remove, length, clear, printAllBuckets, printBucket };
+  //  returns an array that contains each key-value pair in their own arrays
+  const entries = () => {
+    const entries = [];
+    // iterate over all buckets
+    for (let i = 0; i < capacity; i++) {
+      let curr = buckets[i];
+      // case: skip buckets that are empty
+      if (!curr) {
+        continue;
+      }
+      // case: iterate over every node inside bucket
+      while (curr !== null) {
+        entries.push([curr.key, curr.value]);
+        curr = curr.next;
+      }
+    }
+    return entries;
+  };
+
+  return {
+    set,
+    get,
+    has,
+    remove,
+    length,
+    clear,
+    entries,
+    printAllBuckets,
+    printBucket,
+  };
 };
 
 const test = HashMap();
@@ -182,4 +213,7 @@ test.set("abb", "third");
 test.set("q", "fourth");
 
 //test.printAllBuckets();
-test.printBucket("ab");
+//test.printBucket("ab");
+
+console.log(test.entries());
+console.log(test.length());
