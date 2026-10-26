@@ -23,6 +23,7 @@ const HashMap = () => {
     if (!buckets[hashKey]) {
       buckets[hashKey] = { key: key, value: value, next: null };
       count++;
+      resize();
       return;
     }
     // case: bucket not empty, first element has same key
@@ -35,7 +36,7 @@ const HashMap = () => {
     // iterate over nodes in bucket
     while (curr.next !== null) {
       if (curr.key === key) {
-        // key is found stop loop
+        // key is found, stop loop
         break;
       }
       curr = curr.next;
@@ -46,6 +47,7 @@ const HashMap = () => {
     }
     curr.next = { key: key, value: value, next: null };
     count++;
+    resize();
   };
 
   const get = (key) => {
@@ -180,6 +182,27 @@ const HashMap = () => {
     return entries;
   };
 
+  const resize = () => {
+    if (count > resizeAt) {
+      console.log("resize hashmap");
+      // update variables
+      capacity *= 2;
+      resizeAt = capacity * LOAD_FACTOR;
+      count = 0;
+
+      const newBuckets = new Array(capacity).fill(null);
+      const oldEntries = entries();
+      buckets = newBuckets;
+      console.log("new capacity:", capacity);
+      console.log("new resizeAt:", resizeAt);
+      console.log("new count:", count);
+
+      oldEntries.forEach(([key, value]) => {
+        set(key, value);
+      });
+    }
+  };
+
   return {
     set,
     get,
@@ -206,14 +229,9 @@ test.set("ice cream", "white");
 test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
-
-test.set("a", "first");
-test.set("ab", "second");
-test.set("abb", "third");
-test.set("q", "fourth");
-
-//test.printAllBuckets();
-//test.printBucket("ab");
-
-console.log(test.entries());
+//===================================
+test.printAllBuckets();
+console.log(test.length());
+test.set("moon", "silver");
+test.printAllBuckets();
 console.log(test.length());
