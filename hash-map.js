@@ -72,6 +72,41 @@ const HashMap = () => {
     return false;
   };
 
+  const remove = (key) => {
+    const hashKey = hash(key) % capacity;
+    let curr = buckets[hashKey];
+    // case: bucket is empty
+    if (!curr) return false;
+
+    // case: check if head node needs to be removed
+    if (curr.key === key) {
+      buckets[hashKey] = curr.next;
+      count--;
+      return true;
+    }
+    // case: search if node in between or end needs to be removed
+    let prev = null;
+    let next = curr.next;
+    while (curr != null) {
+      // if key is found
+      if (curr.key === key) {
+        prev.next = next;
+        count--;
+        return true;
+      }
+
+      if (next === null) {
+        break;
+      }
+
+      prev = curr;
+      curr = next;
+      next = next.next;
+    }
+
+    return false;
+  };
+
   const length = () => {
     return count;
   };
@@ -105,10 +140,11 @@ const HashMap = () => {
     }
   };
 
-  return { set, get, has, length, clear, printAllBuckets };
+  return { set, get, has, remove, length, clear, printAllBuckets };
 };
 
 const test = HashMap();
+/*
 test.set("apple", "red");
 test.set("banana", "yellow");
 test.set("carrot", "orange");
@@ -121,21 +157,16 @@ test.set("ice cream", "white");
 test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
+*/
 
-console.log(test.has("apple"));
-console.log(test.has("banana"));
-console.log(test.has("carrot"));
-console.log(test.has("dog"));
-console.log(test.has("elephant"));
-console.log(test.has("frog"));
-console.log(test.has("grape"));
-console.log(test.has("hat"));
-console.log(test.has("ice cream"));
-console.log(test.has("jacket"));
-console.log(test.has("kite"));
-console.log(test.has("lion"));
+test.set("a", "first");
+test.set("ab", "second");
+test.set("abb", "third");
+test.set("abb", "third");
+test.set("q", "fourth");
 
-console.log(test.has("banan"));
-console.log(test.has("grap"));
-console.log(test.has("ice"));
-console.log(test.has("lio"));
+console.log(test.remove("a"));
+console.log(test.remove("q"));
+console.log(test.remove("ab"));
+console.log(test.length());
+test.printAllBuckets();
