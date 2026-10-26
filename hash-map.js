@@ -107,6 +107,7 @@ const HashMap = () => {
     return false;
   };
 
+  // returns the number of stored keys
   const length = () => {
     return count;
   };
@@ -140,11 +141,28 @@ const HashMap = () => {
     }
   };
 
-  return { set, get, has, remove, length, clear, printAllBuckets };
+  const printBucket = (key) => {
+    const hashKey = hash(key) % capacity;
+    let curr = buckets[hashKey];
+    if (!curr) {
+      console.log("Bucket is empty.");
+      return;
+    }
+    let output = "";
+    while (curr !== null) {
+      output += `( ${curr.key}: ${curr.value} )`;
+      if (curr.next !== null) {
+        output += " -> ";
+      }
+      curr = curr.next;
+    }
+    console.log(output);
+  };
+
+  return { set, get, has, remove, length, clear, printAllBuckets, printBucket };
 };
 
 const test = HashMap();
-/*
 test.set("apple", "red");
 test.set("banana", "yellow");
 test.set("carrot", "orange");
@@ -157,16 +175,11 @@ test.set("ice cream", "white");
 test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
-*/
 
 test.set("a", "first");
 test.set("ab", "second");
 test.set("abb", "third");
-test.set("abb", "third");
 test.set("q", "fourth");
 
-console.log(test.remove("a"));
-console.log(test.remove("q"));
-console.log(test.remove("ab"));
-console.log(test.length());
-test.printAllBuckets();
+//test.printAllBuckets();
+test.printBucket("ab");
