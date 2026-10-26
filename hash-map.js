@@ -136,7 +136,6 @@ const HashMap = () => {
     return keys;
   };
 
-  //  returns an array containing all the values (not keys) inside the hash map.
   const values = () => {
     const values = [];
     for (let i = 0; i < capacity; i++) {
@@ -152,7 +151,6 @@ const HashMap = () => {
     return values;
   };
 
-  //  returns an array that contains each key-value pair in their own arrays
   const entries = () => {
     const entries = [];
     // iterate over all buckets
@@ -171,9 +169,9 @@ const HashMap = () => {
     return entries;
   };
 
+  // doubles the bucket sizes and rehashes values into new hashmap if load level exceeds
   const resize = () => {
     if (count > resizeAt) {
-      console.log("resize hashmap");
       // update variables
       capacity *= 2;
       resizeAt = capacity * LOAD_FACTOR;
@@ -182,9 +180,6 @@ const HashMap = () => {
       const newBuckets = new Array(capacity).fill(null);
       const oldEntries = entries();
       buckets = newBuckets;
-      console.log("new capacity:", capacity);
-      console.log("new resizeAt:", resizeAt);
-      console.log("new count:", count);
 
       oldEntries.forEach(([key, value]) => {
         set(key, value);
@@ -204,7 +199,7 @@ const HashMap = () => {
       let curr = buckets[i];
       let output = "";
       do {
-        output += `(${curr.key}: ${curr.value})`;
+        output += `( ${curr.key}: ${curr.value} )`;
         curr = curr.next;
         if (curr !== null) {
           output += " -> ";
@@ -262,10 +257,27 @@ test.set("ice cream", "white");
 test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
-//===================================
-//test.printAllBuckets();
+// overwrite some nodes
+test.set("apple", "new green");
+test.set("elephant", "new white");
+test.set("jacket", "new black");
+test.set("lion", "new silver");
+// add value to trigger resize
 test.set("moon", "silver");
-//test.printAllBuckets();
-const allValues = test.values();
-console.log("values:");
-console.log(allValues);
+// overwrite values in new hashmap
+test.set("carrot", "next red");
+test.set("hat", "next brown");
+test.set("ice cream", "next orange");
+// testing other methods
+console.log(test.get("elephant"));
+console.log(test.get("rabbit")); // undefined
+console.log(test.has("lion"));
+console.log(test.has("tower")); // false;
+console.log(test.length());
+console.log(test.remove("frog")); // true
+console.log(test.remove("frog")); // false;
+console.log(test.length());
+console.log(test.keys());
+console.log(test.values());
+test.clear();
+console.log(test.length()); // 0
