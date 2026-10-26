@@ -136,6 +136,22 @@ const HashMap = () => {
     return keys;
   };
 
+  //  returns an array containing all the values (not keys) inside the hash map.
+  const values = () => {
+    const values = [];
+    for (let i = 0; i < capacity; i++) {
+      let curr = buckets[i];
+      if (!curr) {
+        continue;
+      }
+      while (curr !== null) {
+        values.push(curr.value);
+        curr = curr.next;
+      }
+    }
+    return values;
+  };
+
   //  returns an array that contains each key-value pair in their own arrays
   const entries = () => {
     const entries = [];
@@ -226,6 +242,7 @@ const HashMap = () => {
     length,
     clear,
     keys,
+    values,
     entries,
     printAllBuckets,
     printBucket,
@@ -249,6 +266,6 @@ test.set("lion", "golden");
 //test.printAllBuckets();
 test.set("moon", "silver");
 //test.printAllBuckets();
-const allKeys = test.keys();
-console.log("keys:");
-console.log(allKeys);
+const allValues = test.values();
+console.log("values:");
+console.log(allValues);
