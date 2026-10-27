@@ -44,17 +44,17 @@ class HashSet {
     this.resize();
   }
 
-  resize() {
-    if (this.count > this.resizeAt) {
-      const oldData = this.entries();
-      this.capacity *= 2;
-      this.resizeAt = this.capacity * this.LOAD_FACTOR;
-      this.count = 0;
-      this.buckets = new Array(this.capacity).fill(null);
-      oldData.forEach((key) => {
-        this.set(key);
-      });
+  get(key) {
+    const hashKey = this.hash(key) % this.capacity;
+    let curr = this.buckets[hashKey];
+    while (curr !== null) {
+      if (curr.key === key) {
+        return key;
+      }
+      curr = curr.next;
     }
+
+    return undefined;
   }
 
   entries() {
@@ -68,6 +68,19 @@ class HashSet {
       }
     }
     return entries;
+  }
+
+  resize() {
+    if (this.count > this.resizeAt) {
+      const oldData = this.entries();
+      this.capacity *= 2;
+      this.resizeAt = this.capacity * this.LOAD_FACTOR;
+      this.count = 0;
+      this.buckets = new Array(this.capacity).fill(null);
+      oldData.forEach((key) => {
+        this.set(key);
+      });
+    }
   }
 
   // helper function for debugging
@@ -127,4 +140,8 @@ test.set("jacket");
 test.set("kite");
 test.set("lion");
 test.set("moon");
-test.printBuckets();
+//test.printBuckets();
+console.log(test.get("banana"));
+console.log(test.get("kite"));
+console.log(test.get("hello"));
+console.log(test.get("moon"));
