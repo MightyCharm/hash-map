@@ -70,6 +70,39 @@ class HashSet {
     return false;
   }
 
+  remove(key) {
+    const hashKey = this.hash(key) % this.capacity;
+    let curr = this.buckets[hashKey];
+    // case: buckets is empty
+    if (!curr) return false;
+
+    // case: check if head node needs to be removed
+    if (curr.key === key) {
+      this.buckets[hashKey] = curr.next;
+      this.count--;
+      return true;
+    }
+
+    // case: search if node in between or end needs to be removed
+    let prev = null;
+    let next = curr.next;
+    while (curr !== null) {
+      if (curr.key === key) {
+        prev.next = next;
+        this.count--;
+        return true;
+      }
+
+      if (next === null) {
+        break;
+      }
+      prev = curr;
+      curr = next;
+      next = next.next;
+    }
+    return false;
+  }
+
   entries() {
     const entries = [];
     for (let i = 0; i < this.capacity; i++) {
@@ -153,9 +186,5 @@ test.set("jacket");
 test.set("kite");
 test.set("lion");
 test.set("moon");
-//test.printBuckets();
-console.log(test.has("banana"));
-console.log(test.has("kite"));
-console.log(test.has("hello"));
-console.log(test.has("hat"));
-console.log(test.has("grape"));
+console.log(test.remove("lion"));
+test.printBuckets();
