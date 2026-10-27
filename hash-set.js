@@ -114,6 +114,18 @@ class HashSet {
     this.count = 0;
   }
 
+  keys() {
+    const keys = [];
+    for (let i = 0; i < this.capacity; i++) {
+      let curr = this.buckets[i];
+      while (curr != null) {
+        keys.push(curr.key);
+        curr = curr.next;
+      }
+    }
+    return keys;
+  }
+
   entries() {
     const entries = [];
     for (let i = 0; i < this.capacity; i++) {
@@ -198,6 +210,5 @@ test.set("kite");
 test.set("lion");
 test.set("moon");
 console.log(test.length());
-test.clear();
-console.log(test.length());
-test.printBuckets();
+//test.printBuckets();
+console.log(test.keys());
