@@ -42,6 +42,19 @@ class HashSet {
     this.count++;
   }
 
+  entries() {
+    const entries = [];
+    for (let i = 0; i < this.capacity; i++) {
+      let curr = this.buckets[i];
+
+      while (curr !== null) {
+        entries.push(curr.key);
+        curr = curr.next;
+      }
+    }
+    return entries;
+  }
+
   // helper function for debugging
   printBuckets() {
     for (let i = 0; i < this.capacity; i++) {
@@ -98,9 +111,5 @@ test.set("ice cream");
 test.set("jacket");
 test.set("kite");
 test.set("lion");
-//console.log(test.buckets);
-//console.log(test.count);
 
-//test.printBuckets();
-test.printBucket("dog");
-test.printBucket("hello");
+console.log(test.entries());
