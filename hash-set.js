@@ -57,6 +57,19 @@ class HashSet {
     return undefined;
   }
 
+  has(key) {
+    const hashKey = this.hash(key) % this.capacity;
+    let curr = this.buckets[hashKey];
+
+    while (curr !== null) {
+      if (curr.key === key) {
+        return true;
+      }
+      curr = curr.next;
+    }
+    return false;
+  }
+
   entries() {
     const entries = [];
     for (let i = 0; i < this.capacity; i++) {
@@ -141,7 +154,8 @@ test.set("kite");
 test.set("lion");
 test.set("moon");
 //test.printBuckets();
-console.log(test.get("banana"));
-console.log(test.get("kite"));
-console.log(test.get("hello"));
-console.log(test.get("moon"));
+console.log(test.has("banana"));
+console.log(test.has("kite"));
+console.log(test.has("hello"));
+console.log(test.has("hat"));
+console.log(test.has("grape"));
