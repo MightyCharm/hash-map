@@ -24,6 +24,7 @@ class HashSet {
     if (!this.buckets[hashKey]) {
       this.buckets[hashKey] = { key: key, next: null };
       this.count++;
+      this.resize();
       return;
     }
 
@@ -40,6 +41,20 @@ class HashSet {
 
     curr.next = { key: key, next: null };
     this.count++;
+    this.resize();
+  }
+
+  resize() {
+    if (this.count > this.resizeAt) {
+      const oldData = this.entries();
+      this.capacity *= 2;
+      this.resizeAt = this.capacity * this.LOAD_FACTOR;
+      this.count = 0;
+      this.buckets = new Array(this.capacity).fill(null);
+      oldData.forEach((key) => {
+        this.set(key);
+      });
+    }
   }
 
   entries() {
@@ -111,5 +126,5 @@ test.set("ice cream");
 test.set("jacket");
 test.set("kite");
 test.set("lion");
-
-console.log(test.entries());
+test.set("moon");
+test.printBuckets();
