@@ -14,14 +14,47 @@ class HashSet {
     for (let i = 0; i < key.length; i++) {
       hashCode = primeNumber * hashCode + key.charCodeAt(i);
     }
-
     return hashCode;
+  }
+
+  set(key) {
+    const hashKey = this.hash(key) % this.capacity;
+
+    // case: bucket is empty, add new node
+    if (!this.buckets[hashKey]) {
+      this.buckets[hashKey] = { key: key, next: null };
+      this.count++;
+      return;
+    }
+
+    // case: first key is same as new key, return
+    if (this.buckets[hashKey].key === key) return;
+
+    // case: iterate till last node and add new node
+    let curr = this.buckets[hashKey];
+    while (curr.next !== null) {
+      curr = curr.next;
+      // key is already inside bucket
+      if (curr.key === key) return;
+    }
+
+    curr.next = { key: key, next: null };
+    this.count++;
   }
 }
 
 const test = new HashSet();
-console.log(test.LOAD_FACTOR);
+test.set("apple");
+test.set("banana");
+test.set("carrot");
+test.set("dog");
+test.set("elephant");
+test.set("frog");
+test.set("grape");
+test.set("hat");
+test.set("ice cream");
+test.set("jacket");
+test.set("kite");
+test.set("lion");
 console.log(test.buckets);
-console.log(test.capacity);
-console.log(test.resizeAt);
-console.log(test.hash("apple") % test.capacity);
+console.log(test.count);
