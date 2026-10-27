@@ -41,6 +41,26 @@ class HashSet {
     curr.next = { key: key, next: null };
     this.count++;
   }
+
+  // helper function for debugging
+  printBuckets() {
+    for (let i = 0; i < this.capacity; i++) {
+      let output = `Bucket ${i}:\n`;
+      let curr = this.buckets[i];
+      if (curr === null) {
+        output += curr;
+      }
+      while (curr !== null) {
+        output += `( ${curr.key} )`;
+        if (curr.next !== null) {
+          output += " -> ";
+        }
+        curr = curr.next;
+      }
+      output += "\n";
+      console.log(output);
+    }
+  }
 }
 
 const test = new HashSet();
@@ -56,5 +76,7 @@ test.set("ice cream");
 test.set("jacket");
 test.set("kite");
 test.set("lion");
-console.log(test.buckets);
+//console.log(test.buckets);
 console.log(test.count);
+
+test.printBuckets();
