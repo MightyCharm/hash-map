@@ -103,6 +103,10 @@ class HashSet {
     return false;
   }
 
+  length() {
+    return this.count;
+  }
+
   entries() {
     const entries = [];
     for (let i = 0; i < this.capacity; i++) {
@@ -186,5 +190,6 @@ test.set("jacket");
 test.set("kite");
 test.set("lion");
 test.set("moon");
+console.log(test.length());
 console.log(test.remove("lion"));
-test.printBuckets();
+console.log(test.length());
