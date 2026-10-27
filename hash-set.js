@@ -73,7 +73,7 @@ class HashSet {
   remove(key) {
     const hashKey = this.hash(key) % this.capacity;
     let curr = this.buckets[hashKey];
-    // case: buckets is empty
+    // case: bucket is empty
     if (!curr) return false;
 
     // case: check if head node needs to be removed
@@ -209,6 +209,17 @@ test.set("jacket");
 test.set("kite");
 test.set("lion");
 test.set("moon");
+
+console.log(test.get("jacket"));
+console.log(test.get("Jacket"));
+console.log(test.has("apple"));
+console.log(test.has("moon"));
+console.log(test.has("car"));
 console.log(test.length());
-//test.printBuckets();
+console.log(test.remove("ice cream"));
+console.log(test.has("ice cream"));
+console.log(test.length());
 console.log(test.keys());
+console.log(test.entries());
+test.clear();
+console.log(test.length());
