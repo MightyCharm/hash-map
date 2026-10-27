@@ -45,13 +45,13 @@ class HashSet {
   // helper function for debugging
   printBuckets() {
     for (let i = 0; i < this.capacity; i++) {
-      let output = `Bucket ${i}:\n`;
+      let output = `Bucket ${i}: `;
       let curr = this.buckets[i];
       if (curr === null) {
         output += curr;
       }
       while (curr !== null) {
-        output += `( ${curr.key} )`;
+        output += `(${curr.key})`;
         if (curr.next !== null) {
           output += " -> ";
         }
@@ -60,6 +60,28 @@ class HashSet {
       output += "\n";
       console.log(output);
     }
+  }
+
+  // helper function for debugging
+  printBucket(key) {
+    const hashKey = this.hash(key) % this.capacity;
+    let curr = this.buckets[hashKey];
+    let output = "Bucket ";
+    if (!curr) {
+      output += "not found.";
+    } else {
+      output += `${hashKey}: `;
+    }
+
+    while (curr !== null) {
+      output += `(${curr.key})`;
+      if (curr.next !== null) {
+        output += " -> ";
+      }
+      curr = curr.next;
+    }
+    output += "\n";
+    console.log(output);
   }
 }
 
@@ -77,6 +99,8 @@ test.set("jacket");
 test.set("kite");
 test.set("lion");
 //console.log(test.buckets);
-console.log(test.count);
+//console.log(test.count);
 
-test.printBuckets();
+//test.printBuckets();
+test.printBucket("dog");
+test.printBucket("hello");
