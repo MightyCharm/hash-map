@@ -19,24 +19,22 @@ const HashMap = () => {
 
   const set = (key, value) => {
     const hashKey = hash(key) % capacity;
-    // case: bucket is empty, create new node and add, raise count
+    // case: bucket is empty, create and add new node
     if (!buckets[hashKey]) {
       buckets[hashKey] = { key: key, value: value, next: null };
       count++;
       resize();
       return;
     }
-    // case: bucket not empty, first element has same key
+    // case: bucket is not empty and first element has same key
     if (buckets[hashKey].key === key) {
       buckets[hashKey].value = value;
       return;
     }
     // case: bucket is not empty and first key was not equal new key
     let curr = buckets[hashKey];
-    // iterate over nodes in bucket
     while (curr.next !== null) {
       if (curr.key === key) {
-        // key is found, stop loop
         break;
       }
       curr = curr.next;
@@ -90,7 +88,6 @@ const HashMap = () => {
     let prev = null;
     let next = curr.next;
     while (curr !== null) {
-      // if key is found
       if (curr.key === key) {
         prev.next = next;
         count--;
