@@ -118,7 +118,7 @@ class HashSet {
     const keys = [];
     for (let i = 0; i < this.capacity; i++) {
       let curr = this.buckets[i];
-      while (curr != null) {
+      while (curr !== null) {
         keys.push(curr.key);
         curr = curr.next;
       }
@@ -174,6 +174,10 @@ class HashSet {
 
   // helper function for debugging
   printBucket(key) {
+    if (typeof key !== "string") {
+      console.log("Key needs to be a string.");
+      return;
+    }
     const hashKey = this.hash(key) % this.capacity;
     let curr = this.buckets[hashKey];
     let output = "Bucket ";
@@ -185,10 +189,10 @@ class HashSet {
 
     while (curr !== null) {
       output += `(${curr.key})`;
-      if (curr.next !== null) {
+      curr = curr.next;
+      if (curr !== null) {
         output += " -> ";
       }
-      curr = curr.next;
     }
     output += "\n";
     console.log(output);
