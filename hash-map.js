@@ -187,26 +187,23 @@ const HashMap = () => {
     }
   };
 
-  // print all buckets
-  const printAllBuckets = () => {
+  // helper function for debugging
+  const printBuckets = () => {
     for (let i = 0; i < capacity; i++) {
-      console.log(`Bucket ${i}:`);
-      if (buckets[i] === null) {
-        console.log(buckets[i]);
-        console.log();
-        continue;
-      }
+      let output = `Bucket ${i}: `;
       let curr = buckets[i];
-      let output = "";
-      do {
-        output += `( ${curr.key}: ${curr.value} )`;
+      if (curr === null) {
+        output += curr;
+      }
+      while (curr !== null) {
+        output += `(${curr.key}: ${curr.value})`;
         curr = curr.next;
         if (curr !== null) {
           output += " -> ";
         }
-      } while (curr !== null);
+      }
+      output += "\n";
       console.log(output);
-      console.log();
     }
   };
 
@@ -239,7 +236,7 @@ const HashMap = () => {
     keys,
     values,
     entries,
-    printAllBuckets,
+    printBuckets,
     printBucket,
   };
 };
