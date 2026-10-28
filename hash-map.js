@@ -277,5 +277,7 @@ console.log(test.remove("frog")); // false;
 console.log(test.length());
 console.log(test.keys());
 console.log(test.values());
+test.printBucket("jacket");
+test.printBucket("lion");
 test.clear();
 console.log(test.length()); // 0
