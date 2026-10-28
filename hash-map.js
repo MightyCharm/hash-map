@@ -19,7 +19,7 @@ const HashMap = () => {
 
   const set = (key, value) => {
     const hashKey = hash(key) % capacity;
-    // case: "null": create new node and add, raise count
+    // case: bucket is empty, create new node and add, raise count
     if (!buckets[hashKey]) {
       buckets[hashKey] = { key: key, value: value, next: null };
       count++;
@@ -89,7 +89,7 @@ const HashMap = () => {
     // case: search if node in between or end needs to be removed
     let prev = null;
     let next = curr.next;
-    while (curr != null) {
+    while (curr !== null) {
       // if key is found
       if (curr.key === key) {
         prev.next = next;
@@ -207,21 +207,25 @@ const HashMap = () => {
     }
   };
 
-  // print one specific bucket
+  // helper function for debugging
   const printBucket = (key) => {
+    if (typeof key !== "string") {
+      console.log("Key needs to be a string.");
+      return;
+    }
     const hashKey = hash(key) % capacity;
     let curr = buckets[hashKey];
     if (!curr) {
-      console.log("Bucket is empty.");
+      console.log(`Bucket containing key "${key}" was not found.`);
       return;
     }
-    let output = "";
+    let output = `Bucket ${hashKey}: `;
     while (curr !== null) {
-      output += `( ${curr.key}: ${curr.value} )`;
-      if (curr.next !== null) {
+      output += `(${curr.key}: ${curr.value})`;
+      curr = curr.next;
+      if (curr !== null) {
         output += " -> ";
       }
-      curr = curr.next;
     }
     console.log(output);
   };
